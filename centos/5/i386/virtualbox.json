@@ -1,0 +1,65 @@
+{
+	"builders": [
+		{
+			"boot_command": [
+				"<esc>",
+				"<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg",
+				"<enter><wait>"
+			],
+			"boot_wait": "15s",
+			"disk_size": 40960,
+			"guest_os_type": "RedHat",
+			"headless":  false,
+			"http_directory": "../common/http_directory",
+			"iso_url": "http://mirrors.mit.edu/centos/5/isos/i386/CentOS-5.11-i386-bin-DVD-1of2.iso",
+			"iso_checksum": "6ec9fd58d5e05ad9d336fa391928c5de",
+			"iso_checksum_type": "md5",
+			"ssh_password": "vagrant",
+			"ssh_username": "root",
+			"ssh_wait_timeout": "120m",
+			"type": "virtualbox-iso",
+			"shutdown_command": "echo 'packer' | sudo -S halt",
+			"vboxmanage": [
+				["modifyvm", "{{.Name}}", "--memory", "512"]
+			],
+			"vm_name": "centos-5-i386-public"
+		}
+	],
+	"provisioners": [
+		{
+			"type": "shell",
+			"script": "./scripts/epel.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-base.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-guest-additions.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/puppet.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/chef.sh"
+		},
+    {
+      "type": "shell",
+      "script": "../../common/scripts/vagrant.sh"
+    },
+		{
+			"type": "shell",
+			"script": "../../common/scripts/cleanup.sh"
+		}
+	],
+	"post-processors": [
+        {
+            "type": "vagrant",
+            "output": "centos-5-i386.box",
+						"vagrantfile_template": "./vagrantfiles/vagrantfile"
+        }
+    ]
+}

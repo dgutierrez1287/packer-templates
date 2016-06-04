@@ -1,0 +1,64 @@
+{
+	"builders": [
+		{
+			"boot_command": [
+				"<esc>",
+				"<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/desktop-ks.cfg",
+				"<enter><wait>"
+			],
+			"boot_wait": "15s",
+			"disk_size": 40960,
+			"guest_os_type": "RedHat_64",
+			"headless":  false,
+			"http_directory": "../common/http_directory",
+			"iso_url": "http://mirror.lstn.net/scientific/7/x86_64/iso/SL-7.2-DVD-x86_64-2016-02-02.iso",
+			"iso_checksum": "0f80c8a6240aa0b89acef69f960b65a7aa775fca4ddfa99d598edbce1af98556",
+			"iso_checksum_type": "sha256",
+			"ssh_password": "vagrant",
+			"ssh_username": "root",
+			"ssh_wait_timeout": "120m",
+			"type": "virtualbox-iso",
+			"shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+			"vboxmanage": [
+				["modifyvm", "{{.Name}}", "--memory", "1024"]
+			],
+			"vm_name": "scientific-desktop-7-x86-64"
+		}
+	],
+	"provisioners": [
+		{
+			"type": "shell",
+			"script": "./scripts/epel.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-base.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-guest-additions.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/puppet.sh"
+		},
+    {
+			"type": "shell",
+			"script": "../../common/scripts/chef.sh"
+		},
+    {
+      "type": "shell",
+      "script": "../../common/scripts/vagrant.sh"
+    },
+		{
+			"type": "shell",
+			"script": "../../common/scripts/cleanup.sh"
+		}
+	],
+	"post-processors": [
+        {
+            "type": "vagrant",
+            "output": "scientific-desktop-7-x86-64.box"
+        }
+    ]
+}

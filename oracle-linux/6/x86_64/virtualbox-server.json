@@ -1,0 +1,64 @@
+{
+	"builders": [
+		{
+			"boot_command": [
+				"<esc>",
+				"<wait>linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/server-ks.cfg",
+				"<enter><wait>"
+			],
+			"boot_wait": "15s",
+			"disk_size": 40960,
+			"guest_os_type": "RedHat_64",
+			"headless":  false,
+			"http_directory": "../common/http_directory",
+			"iso_url": "http://iso.linuxquestions.org/download/908/8657/http/ftp5.gwdg.de/OracleLinux-R6-U6-Server-x86_64-dvd.iso",
+			"iso_checksum": "5738f10a506d3630edfd297ef179b553091c6a48",
+			"iso_checksum_type": "sha1",
+			"ssh_password": "vagrant",
+			"ssh_username": "root",
+			"ssh_wait_timeout": "120m",
+			"type": "virtualbox-iso",
+			"shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+			"vboxmanage": [
+				["modifyvm", "{{.Name}}", "--memory", "512"]
+			],
+			"vm_name": "oraclelinux-server-6-x86-64"
+		}
+	],
+	"provisioners": [
+		{
+			"type": "shell",
+			"script": "./scripts/epel.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-base.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/vbox-guest-additions.sh"
+		},
+		{
+			"type": "shell",
+			"script": "../../common/scripts/puppet.sh"
+		},
+    {
+			"type": "shell",
+			"script": "../../common/scripts/chef.sh"
+		},
+    {
+      "type": "shell",
+      "script": "../../common/scripts/vagrant.sh"
+    },
+		{
+			"type": "shell",
+			"script": "../../common/scripts/cleanup.sh"
+		}
+	],
+	"post-processors": [
+        {
+            "type": "vagrant",
+            "output": "oraclelinux-server-6-x86-64.box"
+        }
+    ]
+}
