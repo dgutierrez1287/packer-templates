@@ -46,10 +46,10 @@
 			"type": "shell",
 			"script": "../../common/scripts/chef.sh"
 		},
-    {
-      "type": "shell",
-      "script": "../../common/scripts/vagrant.sh"
-    },
+    	{
+      		"type": "shell",
+      		"script": "../../common/scripts/vagrant.sh"
+    	},
 		{
 			"type": "shell",
 			"script": "../../common/scripts/cleanup.sh"

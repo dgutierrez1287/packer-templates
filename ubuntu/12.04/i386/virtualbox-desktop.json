@@ -3,12 +3,12 @@
 		{
 			"boot_command": [
 				"<esc><esc><enter><wait>",
-        "/install/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/desktop-preseed.cfg <wait>",
-        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
-        "hostname={{ .Name }} <wait>",
-        "fb=false debconf/frontend=noninteractive <wait>",
-        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=us keyboard-configuration/variant=us console-setup/ask_detect=false <wait>",
-        "initrd=/install/initrd.gz -- <enter><wait>"
+        		"/install/vmlinuz preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/desktop-preseed.cfg <wait>",
+        		"debian-installer=en_US auto locale=en_US kbd-chooser/method=us <wait>",
+        		"hostname={{ .Name }} <wait>",
+        		"fb=false debconf/frontend=noninteractive <wait>",
+        		"keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=us keyboard-configuration/variant=us console-setup/ask_detect=false <wait>",
+        		"initrd=/install/initrd.gz -- <enter><wait>"
 			],
 			"boot_wait": "15s",
 			"disk_size": 40960,
@@ -18,8 +18,8 @@
 			"iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-alternate-i386.iso",
 			"iso_checksum": "788435b2778d6c7901f14d8cc3ceb4a7",
 			"iso_checksum_type": "md5",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version",
+      		"guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      		"virtualbox_version_file": ".vbox_version",
 			"ssh_password": "vagrant",
 			"ssh_username": "vagrant",
 			"ssh_wait_timeout": "120m",
@@ -27,11 +27,11 @@
 			"shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
 			"vboxmanage": [
 				["modifyvm", "{{.Name}}", "--memory", "1024"],
-        ["modifyvm", "{{.Name}}", "--cpus", "2"],
-        ["modifyvm", "{{.Name}}", "--vram", "128"],
-        ["modifyvm", "{{.Name}}", "--ioapic", "on"],
-        ["modifyvm", "{{.Name}}", "--accelerate3d", "on"],
-        ["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"]
+        		["modifyvm", "{{.Name}}", "--cpus", "2"],
+        		["modifyvm", "{{.Name}}", "--vram", "128"],
+        		["modifyvm", "{{.Name}}", "--ioapic", "on"],
+        		["modifyvm", "{{.Name}}", "--accelerate3d", "on"],
+        		["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"]
 			],
 			"vm_name": "ubuntu-desktop-1204-i386"
 		}
@@ -40,27 +40,27 @@
 		{
 			"type": "shell",
 			"script": "../../common/scripts/base.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
 			"script": "../../common/scripts/vagrant.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
 			"script": "../../common/scripts/vbox-guest-additions.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
-    {
-      "type": "shell",
-      "script": "../common/scripts/puppet.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
-    },
+    	{
+      		"type": "shell",
+      		"script": "../common/scripts/puppet.sh",
+      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+    	},
 		{
 			"type": "shell",
 			"script": "../../common/scripts/cleanup.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
+      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
 	],
 	"post-processors": [
