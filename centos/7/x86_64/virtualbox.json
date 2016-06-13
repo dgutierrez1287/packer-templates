@@ -38,18 +38,10 @@
 			"type": "shell",
 			"script": "../../common/scripts/vbox-guest-additions.sh"
 		},
-		{
-			"type": "shell",
-			"script": "../../common/scripts/puppet.sh"
-		},
-		{
-			"type": "shell",
-			"script": "../../common/scripts/chef.sh"
-		},
-    	{
-      		"type": "shell",
-      		"script": "../../common/scripts/vagrant.sh"
-    	},
+    {
+      	"type": "shell",
+      	"script": "../../common/scripts/vagrant.sh"
+    },
 		{
 			"type": "shell",
 			"script": "../../common/scripts/cleanup.sh"
