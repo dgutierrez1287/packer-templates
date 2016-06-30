@@ -238,6 +238,7 @@ def osArch = options.a
 def packerTemplate = options.f
 
 // read build paramters
+def env = System.getenv()
 def publicVersion = env['PUBLIC_VERSION']
 def publicDescription = env['PUBLIC_VERSION_DESCRIPTION']
 
