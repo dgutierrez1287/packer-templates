@@ -14,7 +14,7 @@
 			"disk_size": 40960,
 			"guest_os_type": "Ubuntu",
 			"headless":  false,
-			"http_directory": "../common/http_directory",
+			"http_directory": "public/ubuntu/12.04/common/http_directory",
 			"iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-alternate-i386.iso",
 			"iso_checksum": "788435b2778d6c7901f14d8cc3ceb4a7",
 			"iso_checksum_type": "md5",
@@ -39,27 +39,22 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "../../common/scripts/base.sh",
+			"script": "public/ubuntu/common/scripts/base.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vagrant.sh",
+			"script": "public/ubuntu/common/scripts/vagrant.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vbox-guest-additions.sh",
+			"script": "public/ubuntu/common/scripts/vbox-guest-additions.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
-    	{
-      		"type": "shell",
-      		"script": "../common/scripts/puppet.sh",
-      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
-    	},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/cleanup.sh",
+			"script": "public/ubuntu/common/scripts/cleanup.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
 	],

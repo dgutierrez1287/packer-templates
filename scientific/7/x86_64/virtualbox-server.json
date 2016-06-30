@@ -10,7 +10,7 @@
 			"disk_size": 40960,
 			"guest_os_type": "RedHat_64",
 			"headless":  false,
-			"http_directory": "../common/http_directory",
+			"http_directory": "public/scientific/7/common/http_directory",
 			"iso_url": "http://mirror.lstn.net/scientific/7/x86_64/iso/SL-7.2-DVD-x86_64-2016-02-02.iso",
 			"iso_checksum": "0f80c8a6240aa0b89acef69f960b65a7aa775fca4ddfa99d598edbce1af98556",
 			"iso_checksum_type": "sha256",
@@ -28,31 +28,23 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "./scripts/epel.sh"
+			"script": "public/scientific/7/x86_64/scripts/epel.sh"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vbox-base.sh"
+			"script": "public/scientific/7/common/scripts/vbox-base.sh"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vbox-guest-additions.sh"
+			"script": "public/scientific/7/common/scripts/vbox-guest-additions.sh"
 		},
+    {
+      "type": "shell",
+      "script": "public/scientific/7/common/scripts/vagrant.sh"
+    },
 		{
 			"type": "shell",
-			"script": "../../common/scripts/puppet.sh"
-		},
-    	{
-      		"type": "shell",
-      		"script": "../../common/scripts/chef.sh"
-    	},
-    	{
-      		"type": "shell",
-      		"script": "../../common/scripts/vagrant.sh"
-    	},
-		{
-			"type": "shell",
-			"script": "../../common/scripts/cleanup.sh"
+			"script": "public/scientific/7/common/scripts/cleanup.sh"
 		}
 	],
 	"post-processors": [

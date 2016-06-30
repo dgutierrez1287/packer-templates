@@ -10,7 +10,7 @@
 			"disk_size": 40960,
 			"guest_os_type": "RedHat_64",
 			"headless":  false,
-			"http_directory": "../common/http_directory",
+			"http_directory": "public/centos/5/common/http_directory",
 			"iso_url": "http://mirrors.mit.edu/centos/5/isos/x86_64/CentOS-5.11-x86_64-bin-DVD-1of2.iso",
 			"iso_checksum": "2deb566098aa21ebfd829ff147a1f71c",
 			"iso_checksum_type": "md5",
@@ -22,36 +22,35 @@
 			"vboxmanage": [
 				["modifyvm", "{{.Name}}", "--memory", "512"]
 			],
-			"vm_name": "centos-5-x86-64-public"
+			"vm_name": "centos-5-x86-64"
 		}
 	],
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "./scripts/epel.sh"
+			"script": "public/centos/5/x86_64/scripts/epel.sh"
 		},
 		{
 			"type": "shell",
-			"script": "../../../public/common/scripts/vbox-base.sh"
+			"script": "public/centos/5/common/scripts/vbox-base.sh"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vbox-guest-additions.sh"
+			"script": "public/centos/5/common/scripts/vbox-guest-additions.sh"
 		},
     {
       	"type": "shell",
-      	"script": "../../common/scripts/vagrant.sh"
+      	"script": "public/centos/5/common/scripts/vagrant.sh"
     },
 		{
 			"type": "shell",
-			"script": "../../common/scripts/cleanup.sh"
+			"script": "public/centos/5/common/scripts/cleanup.sh"
 		}
 	],
 	"post-processors": [
         {
             "type": "vagrant",
-            "output": "centos-5-x86-64.box",
-						"vagrantfile_template": "./vagrantfiles/vagrantfile"
+            "output": "centos-5-x86-64.box"
         }
     ]
 }

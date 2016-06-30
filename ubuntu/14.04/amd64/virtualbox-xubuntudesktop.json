@@ -14,7 +14,7 @@
 			"disk_size": 40960,
 			"guest_os_type": "Ubuntu_64",
 			"headless":  false,
-			"http_directory": "../common/http_directory",
+			"http_directory": "public/ubuntu/14.04/common/http_directory",
 			"iso_url": "http://mirror.pnl.gov/releases/14.04/ubuntu-14.04.3-server-amd64.iso",
 			"iso_checksum": "9e5fecc94b3925bededed0fdca1bd417",
 			"iso_checksum_type": "md5",
@@ -39,42 +39,32 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "../common/scripts/extrasrepo.sh",
+			"script": "public/ubuntu/14.04/common/scripts/extrasrepo.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/base.sh",
+			"script": "public/ubuntu/common/scripts/base.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vagrant.sh",
+			"script": "public/ubuntu/common/scripts/vagrant.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/xubuntu-desktop.sh",
+			"script": "public/ubuntu/common/scripts/xubuntu-desktop.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/vbox-guest-additions.sh",
+			"script": "public/ubuntu/common/scripts/vbox-guest-additions.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "../../common/scripts/chef.sh",
-      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
-		},
-    	{
-      		"type": "shell",
-      		"script": "../common/scripts/puppet.sh",
-      		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
-    	},
-		{
-			"type": "shell",
-			"script": "../../common/scripts/cleanup.sh",
+			"script": "public/ubuntu/common/scripts/cleanup.sh",
       		"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
 	],
