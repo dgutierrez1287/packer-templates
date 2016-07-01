@@ -248,7 +248,22 @@ def atlasToken = env['ATLAS_TOKEN']
 // the base atlas URL
 def atlasBaseUrl = "https://atlas.hashicorp.com"
 
+// print out build parameters
+println ""
+println "Starting build with parameters: "
+println "publicVersion: ${publicVersion}"
+println "publicDescription: ${publicDescription}"
+println "atlasUser: ${atlasUser}"
+println "atlasBaseUrl: ${atlasBaseUrl}"
+println "boxName: ${boxName}"
+println "providerType: ${providerType}"
+println "osName: ${osName}"
+println "osVersion: ${osVersion}"
+println "osArch: ${osArch}"
+println "packerTemplate: ${packerTemplate}"
+
 //check for atlas box .. if false create atlas box
+println "Checking if the Atlas box exists"
 atlasBoxExists = checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName)
 
 if (!atlasBoxExists) {
@@ -260,6 +275,7 @@ else {
 }
 
 //if box existed check for atlas version .. if false create atlas version
+println "Checking if the Atlas box version exists"
 atlasVersionExists = checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
 
 if (!atlasVersionExists) {
@@ -289,7 +305,7 @@ println "Uploading box to atlas"
 uploadBoxToAtlas(boxName, uploadToken, atlasToken)
 
 //release atlas box
-println "Atlas box released for version: ${publicVersion}"
+println "Atlas box ${boxName} released for version: ${publicVersion}"
 atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
 
 System.exit(0)
