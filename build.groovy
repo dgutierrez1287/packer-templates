@@ -15,7 +15,9 @@ def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
-    query: 'access_token': atlasToken
+    query: [
+      'access_token': atlasToken
+    ]
   ) { resp, json ->
       if ( resp.statusLine.getStatusCode() == 200 ){
 
@@ -60,7 +62,9 @@ def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlas
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
-    query: 'access_token': atlasToken
+    query: [
+      'access_token': atlasToken
+    ]
   ) { resp, json ->
       if (resp.statusLine.getStatusCode() == 200){
 
@@ -130,7 +134,9 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/box/${atlasUserName}/${boxName}/version/${publicVersion}/provider/virtualbox/upload",
-    query: 'access_token': atlasToken
+    query: [
+      'access_token': atlasToken
+    ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200){
       def jsonSlurper = new JsonSlurper()
@@ -149,8 +155,12 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
 
   def http = new HTTPBuilder("https://binstore.hashicorp.com/")
   def resp = http.put(path: uploadToken,
-    body: "${boxName}.box",
-    query: 'access_token': atlasToken
+    body: [
+      "${boxName}.box"
+    ],
+    query: [
+      'access_token': atlasToken
+    ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
       println "box ${boxName} uploaded to atlas"
@@ -166,7 +176,9 @@ def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserN
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.put(path: "/api/v1/box/${atlasUserName}/${boxName}/version/${publicVersion}/release",
-    body: 'access_token': atlasToken
+    body: [
+      'access_token': atlasToken
+    ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
       println "successfully released atlas version ${publicVersion} for ${boxName}"
