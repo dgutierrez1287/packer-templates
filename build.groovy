@@ -15,8 +15,8 @@ def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
-    query: [
-      'access_token': atlasToken
+    headers: [
+      'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
       if ( resp.statusLine.getStatusCode() == 200 ){
@@ -64,8 +64,8 @@ def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlas
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
-    query: [
-      'access_token': atlasToken
+    headers: [
+      'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
       if (resp.statusLine.getStatusCode() == 200){
@@ -97,10 +97,12 @@ def createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.post(path: "/api/v1/box/${atlasUser}/${boxName}/versions",
+    headers: [
+      'X-Atlas-Token': atlasToken
+    ],
     body: [
       'version[version]': publicVersion,
       'version[description]': publicDescription,
-      'access_token': atlasToken
     ]
   ){ resp, json ->
     if (resp.statusLine.getStatusCode() == 200){
@@ -117,9 +119,11 @@ def createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasB
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.post(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/providers",
+    headers: [
+      'X-Atlas-Token': atlasToken
+    ],
     body: [
       'provider[name]': providerType,
-      'access_token': atlasToken
     ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
@@ -136,8 +140,8 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/provider/virtualbox/upload",
-    query: [
-      'access_token': atlasToken
+    headers: [
+      'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200){
@@ -157,11 +161,11 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
 
   def http = new HTTPBuilder("https://binstore.hashicorp.com/")
   def resp = http.put(path: uploadToken,
+    headers: [
+      'X-Atlas-Token': atlasToken
+    ],
     body: [
       "${boxName}.box"
-    ],
-    query: [
-      'access_token': atlasToken
     ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
@@ -178,8 +182,8 @@ def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.put(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/release",
-    body: [
-      'access_token': atlasToken
+    headers: [
+      'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
@@ -233,6 +237,7 @@ cli.with {
   v longOpt:'osVersion', args:1, argName:'osVersion', 'The OS version for the box'
   a longOpt:'osArch', args:1, argName:'osArch', 'The OS arch for the box'
   f longOpt:'packerTemplate', args:1, argName:'packerTemplate', 'The name of the packer template'
+  t longOpt:'atlasToken', args:1, argName:'atlasToken', 'The token for atlas access'
 }
 
 def options = cli.parse(args)
@@ -256,8 +261,8 @@ def env = System.getenv()
 def publicVersion = env['PUBLIC_VERSION']
 def publicDescription = env['PUBLIC_VERSION_DESCRIPTION']
 
-// read atlas token from credentials plugin
-def atlasToken = env['ATLAS_TOKEN']
+// read atlas token
+def atlasToken = options.t
 
 // the base atlas URL
 def atlasBaseUrl = "https://atlas.hashicorp.com"
