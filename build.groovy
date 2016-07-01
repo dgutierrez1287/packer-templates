@@ -11,7 +11,7 @@ import java.io.*
 import groovy.util.*
 
 // Functions //
-def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName) {
+def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
@@ -38,7 +38,7 @@ def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName) {
    }
 }
 
-def createAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName) {
+def createAtlasBox(boxName, atlasToken, atlasBaseUrl) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.post(path: "/api/v1/boxes",
@@ -58,7 +58,7 @@ def createAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName) {
   }
 }
 
-def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName) {
+def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.get(path: "/api/v1/user/${atlasUser}",
@@ -91,10 +91,10 @@ def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlas
   }
 }
 
-def createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName) {
+def createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
-  def resp = http.post(path: "/api/v1/box/${atlasUserName}/${boxName}/versions",
+  def resp = http.post(path: "/api/v1/box/${atlasUser}/${boxName}/versions",
     body: [
       'version[version]': publicVersion,
       'version[description]': publicDescription,
@@ -111,10 +111,10 @@ def createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
   }
 }
 
-def createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasBaseUrl, atlasUserName) {
+def createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
-  def resp = http.post(path: "/api/v1/box/${atlasUserName}/${boxName}/version/${publicVersion}/providers",
+  def resp = http.post(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/providers",
     body: [
       'provider[name]': providerType,
       'access_token': atlasToken
@@ -130,10 +130,10 @@ def createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasB
   }
 }
 
-def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName) {
+def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
-  def resp = http.get(path: "/api/v1/box/${atlasUserName}/${boxName}/version/${publicVersion}/provider/virtualbox/upload",
+  def resp = http.get(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/provider/virtualbox/upload",
     query: [
       'access_token': atlasToken
     ]
@@ -172,10 +172,10 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
   }
 }
 
-def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName) {
+def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
-  def resp = http.put(path: "/api/v1/box/${atlasUserName}/${boxName}/version/${publicVersion}/release",
+  def resp = http.put(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/release",
     body: [
       'access_token': atlasToken
     ]
@@ -276,11 +276,11 @@ println "packerTemplate: ${packerTemplate}"
 
 //check for atlas box .. if false create atlas box
 println "Checking if the Atlas box exists"
-atlasBoxExists = checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName)
+atlasBoxExists = checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUser)
 
 if (!atlasBoxExists) {
   println "atlas box doesn't exist, creating the box"
-  createAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUserName)
+  createAtlasBox(boxName, atlasToken, atlasBaseUrl)
 }
 else {
   println "atlas box already exists"
@@ -288,11 +288,11 @@ else {
 
 //if box existed check for atlas version .. if false create atlas version
 println "Checking if the Atlas box version exists"
-atlasVersionExists = checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
+atlasVersionExists = checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 
 if (!atlasVersionExists) {
   println "atlas version doesn't exist, creating the version"
-  createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
+  createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 }
 // error since the script doesnt support multiple providers
 else {
@@ -302,14 +302,14 @@ else {
 
 //create provider for atlas box
 println "Creating atlas provider"
-createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
+createAtlasProvider(boxName, providerType, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 
 //build box
 buildBox(osName, osVersion, osArch, "public", packerTemplate)
 
 //get upload token
 println "Getting the upload path for atlas"
-uploadToken = getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
+uploadToken = getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 println "upload path for atlas: ${uploadToken}"
 
 //upload box to atlas
@@ -318,6 +318,6 @@ uploadBoxToAtlas(boxName, uploadToken, atlasToken)
 
 //release atlas box
 println "Atlas box ${boxName} released for version: ${publicVersion}"
-atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUserName)
+atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
 
 System.exit(0)
