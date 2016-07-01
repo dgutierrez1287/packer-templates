@@ -42,7 +42,7 @@ def createAtlasBox(boxName, atlasToken, atlasBaseUrl) {
 
   def http = new HTTPBuilder(atlasBaseUrl)
   def resp = http.post(path: "/api/v1/boxes",
-  headers.'X-Atlas-Token' = atlasToken
+  headers.'X-Atlas-Token' = atlasToken,
     body: [
       'box[name]': boxName,
       'box[is_private]': 'false'
