@@ -277,7 +277,6 @@ println "osArch: ${osArch}"
 println "packerTemplate: ${packerTemplate}"
 println ""
 
-println "atlasToken: ${atlasToken}"
 
 //check for atlas box .. if false create atlas box
 println "Checking if the Atlas box exists"
