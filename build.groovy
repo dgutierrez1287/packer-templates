@@ -203,7 +203,7 @@ def buildBox(osName, osVersion, osArch, buildType, packerTemplate) {
     'export PATH="$HOME/bin/packer:/usr/local/bin:$PATH"\n'+
     'export PACKER_CACHE="$HOME/.packer_cache"\n'+
     'export PACKER_CACHE_DIR="$HOME/.packer_cache"\n'+
-    "~/bin/packer/packer build -force ${buildType}/${osVersion}/${osArch}/${packerTemplate}.json"
+    "~/bin/packer/packer build -force ${buildType}/${osName}/${osVersion}/${osArch}/${packerTemplate}.json"
   ]
 
   println " "
