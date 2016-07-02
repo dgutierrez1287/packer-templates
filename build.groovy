@@ -101,8 +101,7 @@ def createAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
       'X-Atlas-Token': atlasToken
     ],
     body: [
-      'version[version]': publicVersion,
-      'version[description]': publicDescription,
+      'version[version]': publicVersion
     ]
   ){ resp, json ->
     if (resp.statusLine.getStatusCode() == 200){
@@ -238,6 +237,7 @@ cli.with {
   a longOpt:'osArch', args:1, argName:'osArch', 'The OS arch for the box'
   f longOpt:'packerTemplate', args:1, argName:'packerTemplate', 'The name of the packer template'
   t longOpt:'atlasToken', args:1, argName:'atlasToken', 'The token for atlas access'
+  e longOpt:'publicVersion', args:1, argName:'publicVersion', 'This is the version for the box being built'
 }
 
 def options = cli.parse(args)
@@ -248,6 +248,7 @@ if (options.h) {
 }
 
 // create variables from cli options
+def publicVersion = options.e
 def atlasUser = options.u
 def boxName = options.b
 def providerType = options.p
@@ -255,11 +256,6 @@ def osName = options.o
 def osVersion = options.v
 def osArch = options.a
 def packerTemplate = options.f
-
-// read build paramters
-def env = System.getenv()
-def publicVersion = env['PUBLIC_VERSION']
-def publicDescription = env['PUBLIC_VERSION_DESCRIPTION']
 
 // read atlas token
 def atlasToken = options.t
@@ -271,7 +267,6 @@ def atlasBaseUrl = "https://atlas.hashicorp.com"
 println ""
 println "Starting build with parameters: "
 println "publicVersion: ${publicVersion}"
-println "publicDescription: ${publicDescription}"
 println "atlasUser: ${atlasUser}"
 println "atlasBaseUrl: ${atlasBaseUrl}"
 println "boxName: ${boxName}"
