@@ -145,7 +145,7 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200){
       def jsonSlurper = new JsonSlurper()
-      def uploadPath = jsonSlurper.parseText(json.toString()).token
+      def uploadToken = jsonSlurper.parseText(json.toString()).token
 
       return uploadToken
     }
