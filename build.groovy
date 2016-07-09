@@ -164,7 +164,7 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
       'X-Atlas-Token': atlasToken
     ],
     body: [
-      "${boxName}.box"
+      new file("${boxName}.box")
     ]
   ) { resp, json ->
     if (resp.statusLine.getStatusCode() == 200) {
