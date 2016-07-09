@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 @Grapes([
-    @GrabResolver(name='org.codehaus.groovy', root='http://central.maven.org/maven2/'),
-    @Grab(group='org.codehaus.groovy', module='http-builder', version='0.7.1')
+    @Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1')
 ])
 
 import groovy.transform.Field
