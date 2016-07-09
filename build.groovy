@@ -1,11 +1,11 @@
 #!/usr/bin/env groovy
 @Grapes([
-    @Grab('org.codehaus.groovy:http-builder'),
+    @Grab(group='org.codehaus.groovy', module='http-builder', version='0.7.1')
 ])
 
 import groovy.transform.Field
-//import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.*
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.RESTClient
 import groovy.json.*
 import java.security.MessageDigest
 import java.io.*
