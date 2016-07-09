@@ -4,8 +4,8 @@
 ])
 
 import groovy.transform.Field
-import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.RESTClient
+//import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.*
 import groovy.json.*
 import java.security.MessageDigest
 import java.io.*
