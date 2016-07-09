@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 @Grapes([
-    @GrabResolver(name='http-builder', root='http://central.maven.org/maven2/'),
+    @GrabResolver(name='org.codehaus.groovy', root='http://central.maven.org/maven2/'),
     @Grab(group='org.codehaus.groovy', module='http-builder', version='0.7.1')
 ])
 
