@@ -5,6 +5,7 @@
 
 import groovy.transform.Field
 import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.RESTClient
 import groovy.json.*
 import java.security.MessageDigest
 import java.io.*
@@ -158,8 +159,8 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
 
 def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
 
-  def http = new HTTPBuilder("https://binstore.hashicorp.com/")
-  def resp = http.put(path: uploadToken,
+  def rest = new RESTClient("https://binstore.hashicorp.com/")
+  def resp = rest.put(path: uploadToken,
     headers: [
       'X-Atlas-Token': atlasToken
     ],
@@ -167,7 +168,7 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
       new File("${boxName}.box")
     ]
   ) { resp, json ->
-    if (resp.statusLine.getStatusCode() == 200) {
+    if (resp.status == 200) {
       println "box ${boxName} uploaded to atlas"
     }
     else {
@@ -179,13 +180,13 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
 
 def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
 
-  def http = new HTTPBuilder(atlasBaseUrl)
-  def resp = http.put(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/release",
+  def rest = new RESTClient(atlasBaseUrl)
+  def resp = rest.put(path: "/api/v1/box/${atlasUser}/${boxName}/version/${publicVersion}/release",
     headers: [
       'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
-    if (resp.statusLine.getStatusCode() == 200) {
+    if (resp.status == 200) {
       println "successfully released atlas version ${publicVersion} for ${boxName}"
     }
     else {
