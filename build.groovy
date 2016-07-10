@@ -164,14 +164,13 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
     body: [
       new File("${boxName}.box")
     ]
-  ) { resp, json ->
-    if (resp.status == 200) {
-      println "box ${boxName} uploaded to atlas"
-    }
-    else {
-      println "Error: couldn't upload the box ${boxName} to atlas"
-      System.exit(1)
-    }
+  )
+  if (resp.status == 200) {
+    println "box ${boxName} uploaded to atlas"
+  }
+  else {
+    println "Error: couldn't upload the box ${boxName} to atlas"
+    System.exit(1)
   }
 }
 
@@ -182,14 +181,13 @@ def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser)
     headers: [
       'X-Atlas-Token': atlasToken
     ]
-  ) { resp, json ->
-    if (resp.status == 200) {
-      println "successfully released atlas version ${publicVersion} for ${boxName}"
-    }
-    else {
-      println "Error: couldn't relase version ${publicVersion} for ${boxName}"
-      System.exit(1)
-    }
+  )
+  if (resp.status == 200) {
+    println "successfully released atlas version ${publicVersion} for ${boxName}"
+  }
+  else {
+    println "Error: couldn't relase version ${publicVersion} for ${boxName}"
+    System.exit(1)
   }
 }
 
