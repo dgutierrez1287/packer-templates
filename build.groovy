@@ -22,8 +22,7 @@ def checkForAtlasBox(boxName, atlasToken, atlasBaseUrl, atlasUser) {
   ) { resp, json ->
       if ( resp.statusLine.getStatusCode() == 200 ){
 
-        def jsonSlurper = new JsonSlurper()
-        def boxes = jsonSlurper.parseText(json.toString()).boxes.name
+        def boxes = json.boxes.name
 
         if ( boxes.contains(boxName) ) {
           return true
@@ -71,8 +70,7 @@ def checkForAtlasVersion(boxName, publicVersion, atlasToken, atlasBaseUrl, atlas
   ) { resp, json ->
       if (resp.statusLine.getStatusCode() == 200){
 
-      def jsonSlurper = new JsonSlurper()
-      def boxes = jsonSlurper.parseText(json.toString()).boxes
+      def boxes = json.boxes
 
       for (box in boxes){
         if (box.name == boxName) {
@@ -144,9 +142,8 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
       'X-Atlas-Token': atlasToken
     ]
   ) { resp, json ->
-    if (resp.statusLine.getStatusCode() == 200){
-      def jsonSlurper = new JsonSlurper()
-      def uploadToken = jsonSlurper.parseText(json.toString()).token
+    if (resp.statusLine.getStatusCode() == 200) {
+      def uploadToken = json.token
 
       return uploadToken
     }
