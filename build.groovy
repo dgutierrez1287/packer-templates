@@ -160,6 +160,7 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
   boxFile = new File("${boxName}.box")
 
   def rest = new RESTClient("https://binstore.hashicorp.com/")
+  rest.encoder.'application/zip' = this.&encodeZipFile
   def resp = rest.put(path: uploadToken,
     headers: [
       'X-Atlas-Token': atlasToken
@@ -174,6 +175,17 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
     println "Error: couldn't upload the box ${boxName} to atlas"
     System.exit(1)
   }
+}
+
+def encodeZipFile( Object data ) throws UnsupportedEncodingException {
+    if ( data instanceof File ) {
+        def entity = new FileEntity( (File) data, "application/zip" );
+        entity.setContentType( "application/zip" );
+        return entity
+    } else {
+        throw new IllegalArgumentException(
+            "Don't know how to encode ${data.class.name} as a zip file" );
+    }
 }
 
 def atlasReleaseBox(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUser) {
