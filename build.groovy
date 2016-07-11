@@ -6,6 +6,7 @@
 import groovy.transform.Field
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.RESTClient
+import static groovyx.net.http.ContentType.*
 import groovy.json.*
 import java.security.MessageDigest
 import java.io.*
@@ -162,7 +163,7 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
       'X-Atlas-Token': atlasToken
     ],
     body: [
-      new File("${boxName}.box")
+      "${boxName}.box"
     ]
   )
   if (resp.status == 200) {
