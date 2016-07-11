@@ -164,7 +164,8 @@ def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
     headers: [
       'X-Atlas-Token': atlasToken
     ],
-    body: boxFile
+    body: boxFile,
+    requestContentType: 'application/zip'
   )
   if (resp.status == 200) {
     println "box ${boxName} uploaded to atlas"
