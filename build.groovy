@@ -6,6 +6,7 @@
 import groovy.transform.Field
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.RESTClient
+import org.apache.http.entity.FileEntity
 import static groovyx.net.http.ContentType.*
 import groovy.json.*
 import java.security.MessageDigest
