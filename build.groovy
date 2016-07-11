@@ -157,14 +157,14 @@ def getAtlasUploadPath(boxName, publicVersion, atlasToken, atlasBaseUrl, atlasUs
 
 def uploadBoxToAtlas(boxName, uploadToken, atlasToken) {
 
+  boxFile = new File("${boxName}.box")
+
   def rest = new RESTClient("https://binstore.hashicorp.com/")
   def resp = rest.put(path: uploadToken,
     headers: [
       'X-Atlas-Token': atlasToken
     ],
-    body: [
-      "${boxName}.box"
-    ]
+    body: boxFile
   )
   if (resp.status == 200) {
     println "box ${boxName} uploaded to atlas"
