@@ -1,7 +1,7 @@
 #!/bin/bash
 
-yum clean all 
+sudo yum clean all
 
 # Zero out the free space to save space in the final image:
-dd if=/dev/zero of=/EMPTY bs=1M
-rm -f /EMPTY
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY

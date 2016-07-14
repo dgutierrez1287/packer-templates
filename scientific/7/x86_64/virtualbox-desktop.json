@@ -15,7 +15,7 @@
 			"iso_checksum": "0f80c8a6240aa0b89acef69f960b65a7aa775fca4ddfa99d598edbce1af98556",
 			"iso_checksum_type": "sha256",
 			"ssh_password": "vagrant",
-			"ssh_username": "root",
+			"ssh_username": "vagrant",
 			"ssh_wait_timeout": "120m",
 			"type": "virtualbox-iso",
 			"shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
@@ -28,23 +28,28 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "public/scientific/7/x86_64/scripts/epel.sh"
+			"script": "public/scientific/7/x86_64/scripts/epel.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "public/scientific/7/common/scripts/vbox-base.sh"
+			"script": "public/scientific/7/common/scripts/vbox-base.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "public/scientific/7/common/scripts/vbox-guest-additions.sh"
+			"script": "public/scientific/7/common/scripts/vbox-guest-additions.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
     {
       "type": "shell",
-      "script": "public/scientific/7/common/scripts/vagrant.sh"
+      "script": "public/scientific/7/common/scripts/vagrant.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
     },
 		{
 			"type": "shell",
-			"script": "public/scientific/7/common/scripts/cleanup.sh"
+			"script": "public/scientific/7/common/scripts/cleanup.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
 	],
 	"post-processors": [

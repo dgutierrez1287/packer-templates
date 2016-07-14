@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chown vagrant:vagrant /home/vagrant/.ssh/*
+sudo chown vagrant:vagrant /home/vagrant/.ssh/*
 
 cat > /home/vagrant/.ssh/id_rsa << EOM
 -----BEGIN RSA PRIVATE KEY-----
@@ -38,6 +38,6 @@ EOM
 
 cp /home/vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/authorized_keys
 
-chmod 600 /home/vagrant/.ssh/id_rsa
-chmod 644 /home/vagrant/.ssh/id_rsa.pub
-chmod 644 /home/vagrant/.ssh/authorized_keys
+sudo chmod 600 /home/vagrant/.ssh/id_rsa
+sudo chmod 644 /home/vagrant/.ssh/id_rsa.pub
+sudo chmod 644 /home/vagrant/.ssh/authorized_keys

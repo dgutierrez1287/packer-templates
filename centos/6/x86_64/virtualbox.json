@@ -15,7 +15,7 @@
 			"iso_checksum": "9381a24b8bee2fed0c26896141a64b69",
 			"iso_checksum_type": "md5",
 			"ssh_password": "vagrant",
-			"ssh_username": "root",
+			"ssh_username": "vagrant",
 			"ssh_wait_timeout": "120m",
 			"type": "virtualbox-iso",
 			"shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
@@ -28,23 +28,28 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"script": "public/centos/6/x86_64/scripts/epel.sh"
+			"script": "public/centos/6/x86_64/scripts/epel.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "public/centos/common/scripts/vbox-base.sh"
+			"script": "public/centos/common/scripts/vbox-base.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
 		{
 			"type": "shell",
-			"script": "public/centos/common/scripts/vbox-guest-additions.sh"
+			"script": "public/centos/common/scripts/vbox-guest-additions.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		},
     {
     		"type": "shell",
-      	"script": "public/centos/common/scripts/vagrant.sh"
+      	"script": "public/centos/common/scripts/vagrant.sh",
+				"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
     },
 		{
 			"type": "shell",
-			"script": "public/centos/common/scripts/cleanup.sh"
+			"script": "public/centos/common/scripts/cleanup.sh",
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'"
 		}
 	],
 	"post-processors": [
