@@ -16,6 +16,7 @@
 			"iso_checksum_type": "md5",
 			"ssh_password": "vagrant",
 			"ssh_username": "vagrant",
+			"ssh_pty": true,
 			"ssh_wait_timeout": "120m",
 			"type": "virtualbox-iso",
 			"shutdown_command": "echo 'packer' | sudo -S halt",
